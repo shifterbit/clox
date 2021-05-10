@@ -6,7 +6,19 @@ project(
   clox
   DESCRIPTION "Implementation of clox"
   LANGUAGES C)
+  
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include_directories(
+  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/include/vm
+  )
 
-add_executable(clox src/main.c)
+set(TARGET clox)
+
+set(CLOX_VM_SRC
+  "src/vm/chunk.c"
+  )
+
+add_executable(${TARGET} src/main.c ${CLOX_VM_SRC})
 
