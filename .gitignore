@@ -10,3 +10,5 @@ CTestTestfile.cmake
 _deps
 build
 ./.ccls-cache
+/.ccls-cache/
+/.cache/
