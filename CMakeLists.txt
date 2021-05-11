@@ -18,6 +18,8 @@ set(TARGET clox)
 
 set(CLOX_VM_SRC
   "src/vm/chunk.c"
+  "src/vm/memory.c"
+  "src/vm/debug.c"
   )
 
 add_executable(${TARGET} src/main.c ${CLOX_VM_SRC})
