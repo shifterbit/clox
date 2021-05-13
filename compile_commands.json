@@ -1,1 +1,27 @@
-./build/compile_commands.json
+[
+{
+  "directory": "/home/tek/src/personal/clox",
+  "command": "/run/current-system/sw/bin/cc  -I/home/tek/src/personal/clox/include -I/home/tek/src/personal/clox/include/vm -g -std=gnu99 -o CMakeFiles/clox.dir/src/main.c.o -c /home/tek/src/personal/clox/src/main.c",
+  "file": "/home/tek/src/personal/clox/src/main.c"
+},
+{
+  "directory": "/home/tek/src/personal/clox",
+  "command": "/run/current-system/sw/bin/cc  -I/home/tek/src/personal/clox/include -I/home/tek/src/personal/clox/include/vm -g -std=gnu99 -o CMakeFiles/clox.dir/src/vm/chunk.c.o -c /home/tek/src/personal/clox/src/vm/chunk.c",
+  "file": "/home/tek/src/personal/clox/src/vm/chunk.c"
+},
+{
+  "directory": "/home/tek/src/personal/clox",
+  "command": "/run/current-system/sw/bin/cc  -I/home/tek/src/personal/clox/include -I/home/tek/src/personal/clox/include/vm -g -std=gnu99 -o CMakeFiles/clox.dir/src/vm/memory.c.o -c /home/tek/src/personal/clox/src/vm/memory.c",
+  "file": "/home/tek/src/personal/clox/src/vm/memory.c"
+},
+{
+  "directory": "/home/tek/src/personal/clox",
+  "command": "/run/current-system/sw/bin/cc  -I/home/tek/src/personal/clox/include -I/home/tek/src/personal/clox/include/vm -g -std=gnu99 -o CMakeFiles/clox.dir/src/vm/debug.c.o -c /home/tek/src/personal/clox/src/vm/debug.c",
+  "file": "/home/tek/src/personal/clox/src/vm/debug.c"
+},
+{
+  "directory": "/home/tek/src/personal/clox",
+  "command": "/run/current-system/sw/bin/cc  -I/home/tek/src/personal/clox/include -I/home/tek/src/personal/clox/include/vm -g -std=gnu99 -o CMakeFiles/clox.dir/src/vm/value.c.o -c /home/tek/src/personal/clox/src/vm/value.c",
+  "file": "/home/tek/src/personal/clox/src/vm/value.c"
+}
+]
