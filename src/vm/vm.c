@@ -23,10 +23,11 @@ static InterpretResult run() {
     case OP_CONSTANT: {
       Value constant = READ_CONSTANT();
       printValue(constant);
-      printf("\n")
+      printf("\n");
+      break;
     }
-      case OP_RETURN:
-        return INTERPRET_OK;
+    case OP_RETURN:
+      return INTERPRET_OK;
     }
   }
 #undef READ_BYTE
