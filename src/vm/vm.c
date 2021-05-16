@@ -6,41 +6,41 @@
 #include "value.h"
 #include "vm.h"
 
-static void resetStack(VM vm) {
-  vm.stackTop = vm.stack;
+static void resetStack(VM *vm) {
+  vm->stackTop = vm->stack;
 }
 
-void initVM(VM vm) {
+void initVM(VM *vm) {
   resetStack(vm);
 }
 
-void freeVM(VM vm) {
+void freeVM(VM *vm) {
 }
 
-void push(VM vm, Value value) {
-  *vm.stackTop = value;
-  vm.stackTop++;
+void push(VM *vm, Value value) {
+  vm->stackTop = &value;
+  vm->stackTop++;
 }
 
-Value pop(VM vm) {
-  vm.stackTop--;
-  return *vm.stackTop;
+Value pop(VM *vm) {
+  vm->stackTop--;
+  return *vm->stackTop;
 }
 
 
-static InterpretResult run(VM vm) {
-#define READ_BYTE() (*vm.ip++)
-#define READ_CONSTANT() (vm.chunk->constants.values[READ_BYTE()])
+static InterpretResult run(VM *vm) {
+#define READ_BYTE() (*vm->ip++)
+#define READ_CONSTANT() (vm->chunk->constants.values[READ_BYTE()])
 #ifdef DEBUG_TRACE_EXECUTION
   printf("          ");
-  for (Value* slot = vm.stack; slot < vm.stackTop; slot++) {
+  for (Value *slot = vm->stack; slot < vm->stackTop; slot++) {
+    printf("\n");
     printf("[ ");
     printValue(*slot);
     printf(" ]");
   }
   printf("\n");
-  disassembleInstruction(vm.chunk, (int)(vm.ip - vm.chunk->code));
-
+  disassembleInstruction(vm->chunk, (int)(vm->ip - vm->chunk->code));
 #endif
 
   for(;;) {
@@ -62,8 +62,8 @@ static InterpretResult run(VM vm) {
 #undef READ_CONSTANT
 }
 
-InterpretResult interpret(VM vm, Chunk *chunk ) {
-  vm.chunk = chunk;
-  vm.ip = vm.chunk->code;
+InterpretResult interpret(VM *vm, Chunk *chunk ) {
+  vm->chunk = chunk;
+  vm->ip = vm->chunk->code;
   return run(vm);
 }
