@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 
 #include "chunk.h"
@@ -15,10 +16,11 @@ void initVM(VM *vm) {
 }
 
 void freeVM(VM *vm) {
+  
 }
 
 void push(VM *vm, Value value) {
-  vm->stackTop = &value;
+  *vm->stackTop = value;
   vm->stackTop++;
 }
 
@@ -33,14 +35,13 @@ static InterpretResult run(VM *vm) {
 #define READ_CONSTANT() (vm->chunk->constants.values[READ_BYTE()])
 #ifdef DEBUG_TRACE_EXECUTION
   printf("          ");
-  for (Value *slot = vm->stack; slot < vm->stackTop; slot++) {
-    printf("\n");
+  for (Value *slot = vm->stack; slot < vm->stackTop; *slot++) {
     printf("[ ");
     printValue(*slot);
     printf(" ]");
   }
   printf("\n");
-  disassembleInstruction(vm->chunk, (int)(vm->ip - vm->chunk->code));
+  disassembleInstruction(vm->chunk, (int)(*vm->ip - *vm->chunk->code));
 #endif
 
   for(;;) {
