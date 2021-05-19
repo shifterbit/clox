@@ -47,10 +47,17 @@ static InterpretResult run(VM *vm) {
   for(;;) {
     uint8_t instruction;
     switch (instruction = READ_BYTE()) {
-    case OP_CONSTANT_LONG:
+    case OP_CONSTANT_LONG: {
+      Value constants[3] = { READ_CONSTANT(), READ_CONSTANT(), READ_CONSTANT() };
+      push(vm, constants[0] + constants[1] + constants[2]);
+    }
     case OP_CONSTANT: {
       Value constant = READ_CONSTANT();
       push(vm, constant);
+      break;
+    }
+    case OP_NEGATE: {
+      push(vm, -pop(vm));
       break;
     }
     case OP_RETURN:

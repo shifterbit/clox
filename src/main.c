@@ -7,14 +7,15 @@ int main(int argc, const char *argv[]) {
   VM vm;
   Chunk chunk;
   initVM(&vm);
-  interpret(&vm, &chunk);
   initChunk(&chunk);
 
   writeConstant(&chunk, 23, 123);
-  writeChunk(&chunk, OP_RETURN, 124);
+  writeChunk(&chunk, OP_NEGATE, 123);
+  writeChunk(&chunk, OP_RETURN, 125);
   disassembleChunk(&chunk, "test chunk");
-  freeChunk(&chunk);
+  interpret(&vm, &chunk);
   freeVM(&vm);
+  freeChunk(&chunk);
 
   return 0;
 }
