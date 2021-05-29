@@ -4,9 +4,10 @@
 #include "chunk.h"
 #include "common.h"
 #include "debug.h"
+#include "compiler.h"
 #include "value.h"
-#include "vm.h"
 #include "memory.h"
+#include "vm.h"
 
 static void resetStack(VM *vm) {
   vm->stackCount = 0;
@@ -102,8 +103,7 @@ static InterpretResult run(VM *vm) {
 #undef BINARY_OP
 }
 
-InterpretResult interpret(VM *vm, Chunk *chunk ) {
-  vm->chunk = chunk;
-  vm->ip = vm->chunk->code;
-  return run(vm);
+InterpretResult interpret(const char *source) {
+  compile(source);
+  return INTERPRET_OK;
 }
