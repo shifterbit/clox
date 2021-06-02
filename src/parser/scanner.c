@@ -63,6 +63,10 @@ static void skipWhitespace(Scanner *scanner) {
     case '\t':
       advance(scanner);
       break;
+    case '\n':
+      scanner->line++;
+      advance(scanner);
+      break;
     default:
       return;
 
