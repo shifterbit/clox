@@ -23,6 +23,13 @@ static char peek(Scanner *scanner) {
   return *scanner->current;
 }
 
+static char peekNext(Scanner *scanner) {
+  if (isAtEnd(scanner)) {
+    return '\0';
+  }
+  return scanner->current[1];
+}
+
 static bool match(Scanner *scanner, char expected) {
   if (isAtEnd(scanner)) {
     return false;
@@ -67,11 +74,36 @@ static void skipWhitespace(Scanner *scanner) {
       scanner->line++;
       advance(scanner);
       break;
+    case '/':
+      if (peekNext(scanner) == '/') {
+        // A comment goes until the end of the line.
+        while (peek(scanner) != '\n' && !isAtEnd(scanner)) {
+          advance(scanner);
+        }
+      } else {
+        return;
+      }
+      break;
     default:
       return;
 
     }
   }
+}
+
+static Token string(Scanner *scanner) {
+  while (peek(scanner) != '"' && isAtEnd(scanner)) {
+    if (peek(scanner) == '\n') {
+      scanner->line++;
+      advance(scanner);
+    }
+  }
+
+  if (isAtEnd(scanner)) {
+    return errorToken(scanner, "Unterminated string.");
+   }
+  advance(scanner);
+  return makeToken(scanner, TOKEN_STRING);
 }
 
 Token scanToken(Scanner *scanner) {
@@ -112,6 +144,8 @@ Token scanToken(Scanner *scanner) {
     return makeToken(scanner, match(scanner, '=') ? TOKEN_LESS_EQUAL : TOKEN_LESS);
   case '>':
     return makeToken(scanner, match(scanner, '=') ? TOKEN_GREATER_EQUAL : TOKEN_GREATER);
+  case '"':
+    return string(scanner);
   }
 
   return errorToken(scanner, "Unexpected character.");
