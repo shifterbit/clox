@@ -12,6 +12,10 @@ Scanner initScanner(const char *source) {
   return scanner;
 }
 
+static bool isDigit(char c) {
+  return c >= '0' && c <= '9';
+}
+
 static bool isAtEnd(Scanner *scanner) { return *scanner->current == '\0'; }
 
 static char advance(Scanner *scanner) {
@@ -91,6 +95,22 @@ static void skipWhitespace(Scanner *scanner) {
   }
 }
 
+static Token number(Scanner *scanner ) {
+  while (isDigit(peek(scanner))) {
+    advance(scanner);
+  }
+
+  if (peek(scanner) == '.' && isDigit(peekNext(scanner))) {
+    advance(scanner);
+    while (isDigit(peek(scanner))) {
+      advance(scanner);
+    }
+  }
+
+  return makeToken(scanner, TOKEN_NUMBER);
+  
+}
+
 static Token string(Scanner *scanner) {
   while (peek(scanner) != '"' && isAtEnd(scanner)) {
     if (peek(scanner) == '\n') {
@@ -113,6 +133,9 @@ Token scanToken(Scanner *scanner) {
   }
 
   char c = advance(scanner);
+  if (isDigit(scanner, char c)) {
+    return number(scanner);
+      }
   switch (c) {
   case '(':
     return makeToken(scanner, TOKEN_LEFT_PAREN);
