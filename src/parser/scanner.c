@@ -133,7 +133,7 @@ Token scanToken(Scanner *scanner) {
   }
 
   char c = advance(scanner);
-  if (isDigit(scanner, char c)) {
+  if (isDigit(c)) {
     return number(scanner);
       }
   switch (c) {
